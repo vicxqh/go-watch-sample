@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package pb;
+
+service KVService{
+  rpc Put(PutRequest) returns (PutResponse) {}
+
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+
+  rpc Watch(Filter) returns (stream Event) {}
+}
+
+message PutRequest{
+  string Key= 1;
+  string value = 2;
+}
+
+message PutResponse {
+  bool update = 1;
+}
+
+message DeleteRequest {
+  string Key = 1;
+}
+
+message DeleteResponse {
+  bool removed = 1;
+}
+
+message Filter {
+  bool create = 1;
+  bool update = 2;
+  bool delete = 3;
+}
+
+message Event {
+  enum EventType{
+    Creat = 0;
+    Update = 1;
+    Delete= 2;
+  }
+  EventType type = 1;
+  string key = 2;
+  string value = 3;
+  string old_value = 4;
+}
+
+
