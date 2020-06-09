@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/signal"
 	"strings"
+	"time"
 
 	"github.com/xiaowei1235/go-watch-sample/pb"
 
@@ -85,6 +86,66 @@ func handleCmd(cmd string) {
 		} else {
 			fmt.Println("no such key")
 		}
+	case "benchstart":
+		client.WatchBenchmark(context.Background(), &pb.BenchmarkRequest{
+			Command: pb.BenchmarkRequest_start,
+		})
+	case "benchstop":
+		client.WatchBenchmark(context.Background(), &pb.BenchmarkRequest{
+			Command: pb.BenchmarkRequest_stop,
+		})
+	case "benchstats":
+		client.WatchBenchmark(context.Background(), &pb.BenchmarkRequest{
+			Command: pb.BenchmarkRequest_stats,
+		})
+	case "benchwatch":
+		if len(tokens) != 2 {
+			goto help_and_exit
+		}
+		option := tokens[1]
+		opts := strings.Split(option, ",")
+		filter := pb.Filter{}
+		for _, opt := range opts {
+			if opt == "create" {
+				filter.Create = true
+			} else if opt == "delete" {
+				filter.Delete = true
+			} else if opt == "update" {
+				filter.Update = true
+			} else {
+				goto help_and_exit
+			}
+		}
+
+		stream, err := client.Watch(context.Background(), &filter)
+		if err != nil {
+			fmt.Println(fmt.Sprintf("failed to watch, %v", err))
+			return
+		}
+		started := false
+		var startTime time.Time
+		var received int
+		for {
+			_, err := stream.Recv()
+			if err == io.EOF {
+				fmt.Println("server aborted")
+				return
+			}
+			if err != nil {
+				fmt.Println(fmt.Sprintf("failed to receive event, %v", err))
+				return
+			}
+			if started {
+				received++
+				if received%100 == 0 {
+					fmt.Printf("received %d, qps: %.2f\n", received, float64(received)/time.Now().Sub(startTime).Seconds())
+				}
+			} else {
+				started = true
+				startTime = time.Now()
+			}
+		}
+
 	case "watch":
 		if len(tokens) != 2 {
 			goto help_and_exit

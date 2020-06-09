@@ -8,7 +8,21 @@ service KVService{
   rpc Delete(DeleteRequest) returns (DeleteResponse) {}
 
   rpc Watch(Filter) returns (stream Event) {}
+
+  // for testing
+  rpc WatchBenchmark(BenchmarkRequest) returns (BenchmarkResponse) {}
 }
+
+message BenchmarkRequest {
+  enum Command {
+    start = 0;
+    stop = 1;
+    stats = 2;
+  }
+  Command command = 1;
+}
+
+message BenchmarkResponse {}
 
 message PutRequest{
   string Key= 1;

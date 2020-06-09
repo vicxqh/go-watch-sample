@@ -3,7 +3,9 @@ package server
 import (
 	"context"
 	"log"
+	"math/rand"
 	"sync"
+	"time"
 
 	"github.com/xiaowei1235/go-watch-sample/pb"
 )
@@ -16,6 +18,8 @@ type Server struct {
 	sub   chan chan pb.Event
 	unsub chan chan pb.Event
 	subs  map[chan pb.Event]struct{}
+
+	bench chan pb.BenchmarkRequest_Command
 }
 
 func NewServer() *Server {
@@ -26,9 +30,63 @@ func NewServer() *Server {
 		sub:   make(chan chan pb.Event),
 		unsub: make(chan chan pb.Event),
 		subs:  make(map[chan pb.Event]struct{}),
+
+		bench: make(chan pb.BenchmarkRequest_Command),
 	}
 	go s.run()
+	go s.benchmark()
 	return s
+}
+
+func (s *Server) benchmark() {
+	started := false
+
+	var startTime, endTime time.Time
+	var issued int
+
+	p := func(e time.Time) {
+		log.Printf("issued %d, qps: %f", issued, float64(issued)/e.Sub(startTime).Seconds())
+	}
+
+	randString := func() string {
+		const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		b := make([]byte, 128)
+		for i := range b {
+			b[i] = letterBytes[rand.Intn(len(letterBytes))]
+		}
+		return string(b)
+	}
+	randEvent := func() pb.Event {
+		return pb.Event{
+			Type:     pb.Event_EventType(rand.Intn(3)),
+			Key:      randString(),
+			Value:    randString(),
+			OldValue: randString(),
+		}
+	}
+
+	for {
+		select {
+		case cmd := <-s.bench:
+			switch cmd {
+			case pb.BenchmarkRequest_start:
+				started = true
+				startTime = time.Now()
+			case pb.BenchmarkRequest_stop:
+				started = false
+				endTime = time.Now()
+				p(endTime)
+				return
+			case pb.BenchmarkRequest_stats:
+				p(time.Now())
+			}
+		default:
+			if started {
+				s.events <- randEvent()
+				issued++
+			}
+		}
+	}
 }
 
 func (s *Server) run() {
@@ -42,7 +100,7 @@ func (s *Server) run() {
 		case l := <-s.unsub:
 			delete(s.subs, l)
 			log.Printf("watcher count %d", len(s.subs))
-		// broadcast new events to all wathers
+		// broadcast new events to all watchers
 		case e := <-s.events:
 			for c, _ := range s.subs {
 				c <- e
@@ -122,4 +180,9 @@ func (s *Server) Watch(filter *pb.Filter, stream pb.KVService_WatchServer) error
 		}
 	}
 	return nil
+}
+
+func (s *Server) WatchBenchmark(ctx context.Context, request *pb.BenchmarkRequest) (*pb.BenchmarkResponse, error) {
+	s.bench <- request.Command
+	return &pb.BenchmarkResponse{}, nil
 }

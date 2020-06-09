@@ -14,3 +14,7 @@ client 可以使用watch功能，接受关注的事件通知。
 ## 如何运行示例
 
 `make all`
+
+## 性能
+
+在mac本子上开了4个watch client，服务端（同机部署）能发送29k qps 的事件。
