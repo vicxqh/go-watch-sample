@@ -44,15 +44,9 @@ func (s *Server) run() {
 			log.Printf("watcher count %d", len(s.subs))
 		// broadcast new events to all wathers
 		case e := <-s.events:
-			ls := make([]chan pb.Event, 0, len(s.subs))
 			for c, _ := range s.subs {
-				ls = append(ls, c)
+				c <- e
 			}
-			go func() {
-				for _, l := range ls {
-					l <- e
-				}
-			}()
 		}
 	}
 }
