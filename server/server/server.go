@@ -36,24 +36,18 @@ func (s *Server) run() {
 		select {
 		// subscribe a new watcher
 		case l := <-s.sub:
-			s.Lock()
 			s.subs[l] = struct{}{}
 			log.Printf("watcher count %d", len(s.subs))
-			s.Unlock()
 		// unsubscribe a watcher
 		case l := <-s.unsub:
-			s.Lock()
 			delete(s.subs, l)
 			log.Printf("watcher count %d", len(s.subs))
-			s.Unlock()
 		// broadcast new events to all wathers
 		case e := <-s.events:
-			s.RLock()
 			ls := make([]chan pb.Event, 0, len(s.subs))
 			for c, _ := range s.subs {
 				ls = append(ls, c)
 			}
-			s.RUnlock()
 			go func() {
 				for _, l := range ls {
 					l <- e
