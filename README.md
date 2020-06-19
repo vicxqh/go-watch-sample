@@ -10,6 +10,7 @@ client 可以使用watch功能，接受关注的事件通知。
 1. grpc stream 实现长链接，使得服务端可以通知client。
 2. server端实现消息广播机制，使得一个事件可以发送给所有client
 3. server为每个client维护一个过滤器，过滤非关注事件
+4. sdk端实现多个watch复用一个grpc stream
 
 ## 如何运行示例
 
