@@ -25,6 +25,8 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	grpcServer := grpc.NewServer()
-	pb.RegisterKVServiceServer(grpcServer, server.NewServer())
+	server := server.NewServer()
+	pb.RegisterWatchServer(grpcServer, server)
+	pb.RegisterKVServiceServer(grpcServer, server)
 	grpcServer.Serve(lis)
 }

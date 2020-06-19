@@ -2,31 +2,15 @@ syntax = "proto3";
 
 package pb;
 
-service KVService{
+service KVService {
   rpc Put(PutRequest) returns (PutResponse) {}
-
   rpc Delete(DeleteRequest) returns (DeleteResponse) {}
-
-  rpc Watch(Filter) returns (stream Event) {}
-
-  // for testing
-  rpc WatchBenchmark(BenchmarkRequest) returns (BenchmarkResponse) {}
 }
-
-message BenchmarkRequest {
-  enum Command {
-    start = 0;
-    stop = 1;
-    stats = 2;
-  }
-  Command command = 1;
-}
-
-message BenchmarkResponse {}
 
 message PutRequest{
-  string Key= 1;
-  string value = 2;
+  ResourceType rtype = 1;
+  string Key= 2;
+  string value = 3;
 }
 
 message PutResponse {
@@ -34,29 +18,59 @@ message PutResponse {
 }
 
 message DeleteRequest {
-  string Key = 1;
+  ResourceType rtype = 1;
+  string Key = 2;
 }
 
 message DeleteResponse {
   bool removed = 1;
 }
 
-message Filter {
-  bool create = 1;
-  bool update = 2;
-  bool delete = 3;
+
+service Watch{
+  rpc Watch(stream WatchRequest) returns (stream WatchResponse) {}
 }
 
-message Event {
-  enum EventType{
-    Creat = 0;
-    Update = 1;
-    Delete= 2;
+
+message WatchCancelRequest {
+  // watch_id is the watcher id to cancel so that no more events are transmitted.
+  int64 watch_id = 1;
+}
+
+message WatchRequest {
+  // request_union is a request to either create a new watcher or cancel an existing watcher.
+  oneof request_union {
+    WatchCreateRequest create_request = 1;
+    WatchCancelRequest cancel_request = 2;
   }
-  EventType type = 1;
-  string key = 2;
+}
+
+message WatchCreateRequest {
+  ResourceType r_type = 1;
+  repeated EventType e_type = 2;
+}
+
+enum EventType{
+  Creat = 0;
+  Update = 1;
+  Delete= 2;
+}
+
+enum ResourceType {
+  A = 0;
+  B = 1;
+  C = 2;
+}
+message Event {
+  EventType e_type = 1;
+  ResourceType r_type = 2;
   string value = 3;
   string old_value = 4;
+}
+message WatchResponse {
+  bool created = 1;
+  int64 watch_id = 2;
+  Event event = 3;
 }
 
 

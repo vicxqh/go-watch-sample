@@ -24,145 +24,76 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type BenchmarkRequest_Command int32
+type EventType int32
 
 const (
-	BenchmarkRequest_start BenchmarkRequest_Command = 0
-	BenchmarkRequest_stop  BenchmarkRequest_Command = 1
-	BenchmarkRequest_stats BenchmarkRequest_Command = 2
+	EventType_Creat  EventType = 0
+	EventType_Update EventType = 1
+	EventType_Delete EventType = 2
 )
 
-var BenchmarkRequest_Command_name = map[int32]string{
-	0: "start",
-	1: "stop",
-	2: "stats",
-}
-
-var BenchmarkRequest_Command_value = map[string]int32{
-	"start": 0,
-	"stop":  1,
-	"stats": 2,
-}
-
-func (x BenchmarkRequest_Command) String() string {
-	return proto.EnumName(BenchmarkRequest_Command_name, int32(x))
-}
-
-func (BenchmarkRequest_Command) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_6ff5ab49d8a5fcc4, []int{0, 0}
-}
-
-type Event_EventType int32
-
-const (
-	Event_Creat  Event_EventType = 0
-	Event_Update Event_EventType = 1
-	Event_Delete Event_EventType = 2
-)
-
-var Event_EventType_name = map[int32]string{
+var EventType_name = map[int32]string{
 	0: "Creat",
 	1: "Update",
 	2: "Delete",
 }
 
-var Event_EventType_value = map[string]int32{
+var EventType_value = map[string]int32{
 	"Creat":  0,
 	"Update": 1,
 	"Delete": 2,
 }
 
-func (x Event_EventType) String() string {
-	return proto.EnumName(Event_EventType_name, int32(x))
+func (x EventType) String() string {
+	return proto.EnumName(EventType_name, int32(x))
 }
 
-func (Event_EventType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_6ff5ab49d8a5fcc4, []int{7, 0}
-}
-
-type BenchmarkRequest struct {
-	Command              BenchmarkRequest_Command `protobuf:"varint,1,opt,name=command,proto3,enum=pb.BenchmarkRequest_Command" json:"command,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
-	XXX_unrecognized     []byte                   `json:"-"`
-	XXX_sizecache        int32                    `json:"-"`
-}
-
-func (m *BenchmarkRequest) Reset()         { *m = BenchmarkRequest{} }
-func (m *BenchmarkRequest) String() string { return proto.CompactTextString(m) }
-func (*BenchmarkRequest) ProtoMessage()    {}
-func (*BenchmarkRequest) Descriptor() ([]byte, []int) {
+func (EventType) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_6ff5ab49d8a5fcc4, []int{0}
 }
 
-func (m *BenchmarkRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_BenchmarkRequest.Unmarshal(m, b)
-}
-func (m *BenchmarkRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_BenchmarkRequest.Marshal(b, m, deterministic)
-}
-func (m *BenchmarkRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BenchmarkRequest.Merge(m, src)
-}
-func (m *BenchmarkRequest) XXX_Size() int {
-	return xxx_messageInfo_BenchmarkRequest.Size(m)
-}
-func (m *BenchmarkRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_BenchmarkRequest.DiscardUnknown(m)
+type ResourceType int32
+
+const (
+	ResourceType_A ResourceType = 0
+	ResourceType_B ResourceType = 1
+	ResourceType_C ResourceType = 2
+)
+
+var ResourceType_name = map[int32]string{
+	0: "A",
+	1: "B",
+	2: "C",
 }
 
-var xxx_messageInfo_BenchmarkRequest proto.InternalMessageInfo
-
-func (m *BenchmarkRequest) GetCommand() BenchmarkRequest_Command {
-	if m != nil {
-		return m.Command
-	}
-	return BenchmarkRequest_start
+var ResourceType_value = map[string]int32{
+	"A": 0,
+	"B": 1,
+	"C": 2,
 }
 
-type BenchmarkResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+func (x ResourceType) String() string {
+	return proto.EnumName(ResourceType_name, int32(x))
 }
 
-func (m *BenchmarkResponse) Reset()         { *m = BenchmarkResponse{} }
-func (m *BenchmarkResponse) String() string { return proto.CompactTextString(m) }
-func (*BenchmarkResponse) ProtoMessage()    {}
-func (*BenchmarkResponse) Descriptor() ([]byte, []int) {
+func (ResourceType) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_6ff5ab49d8a5fcc4, []int{1}
 }
 
-func (m *BenchmarkResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_BenchmarkResponse.Unmarshal(m, b)
-}
-func (m *BenchmarkResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_BenchmarkResponse.Marshal(b, m, deterministic)
-}
-func (m *BenchmarkResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BenchmarkResponse.Merge(m, src)
-}
-func (m *BenchmarkResponse) XXX_Size() int {
-	return xxx_messageInfo_BenchmarkResponse.Size(m)
-}
-func (m *BenchmarkResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_BenchmarkResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_BenchmarkResponse proto.InternalMessageInfo
-
 type PutRequest struct {
-	Key                  string   `protobuf:"bytes,1,opt,name=Key,proto3" json:"Key,omitempty"`
-	Value                string   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Rtype                ResourceType `protobuf:"varint,1,opt,name=rtype,proto3,enum=pb.ResourceType" json:"rtype,omitempty"`
+	Key                  string       `protobuf:"bytes,2,opt,name=Key,proto3" json:"Key,omitempty"`
+	Value                string       `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
 func (m *PutRequest) Reset()         { *m = PutRequest{} }
 func (m *PutRequest) String() string { return proto.CompactTextString(m) }
 func (*PutRequest) ProtoMessage()    {}
 func (*PutRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6ff5ab49d8a5fcc4, []int{2}
+	return fileDescriptor_6ff5ab49d8a5fcc4, []int{0}
 }
 
 func (m *PutRequest) XXX_Unmarshal(b []byte) error {
@@ -182,6 +113,13 @@ func (m *PutRequest) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_PutRequest proto.InternalMessageInfo
+
+func (m *PutRequest) GetRtype() ResourceType {
+	if m != nil {
+		return m.Rtype
+	}
+	return ResourceType_A
+}
 
 func (m *PutRequest) GetKey() string {
 	if m != nil {
@@ -208,7 +146,7 @@ func (m *PutResponse) Reset()         { *m = PutResponse{} }
 func (m *PutResponse) String() string { return proto.CompactTextString(m) }
 func (*PutResponse) ProtoMessage()    {}
 func (*PutResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6ff5ab49d8a5fcc4, []int{3}
+	return fileDescriptor_6ff5ab49d8a5fcc4, []int{1}
 }
 
 func (m *PutResponse) XXX_Unmarshal(b []byte) error {
@@ -237,17 +175,18 @@ func (m *PutResponse) GetUpdate() bool {
 }
 
 type DeleteRequest struct {
-	Key                  string   `protobuf:"bytes,1,opt,name=Key,proto3" json:"Key,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Rtype                ResourceType `protobuf:"varint,1,opt,name=rtype,proto3,enum=pb.ResourceType" json:"rtype,omitempty"`
+	Key                  string       `protobuf:"bytes,2,opt,name=Key,proto3" json:"Key,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
 func (m *DeleteRequest) Reset()         { *m = DeleteRequest{} }
 func (m *DeleteRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteRequest) ProtoMessage()    {}
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6ff5ab49d8a5fcc4, []int{4}
+	return fileDescriptor_6ff5ab49d8a5fcc4, []int{2}
 }
 
 func (m *DeleteRequest) XXX_Unmarshal(b []byte) error {
@@ -268,6 +207,13 @@ func (m *DeleteRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DeleteRequest proto.InternalMessageInfo
 
+func (m *DeleteRequest) GetRtype() ResourceType {
+	if m != nil {
+		return m.Rtype
+	}
+	return ResourceType_A
+}
+
 func (m *DeleteRequest) GetKey() string {
 	if m != nil {
 		return m.Key
@@ -286,7 +232,7 @@ func (m *DeleteResponse) Reset()         { *m = DeleteResponse{} }
 func (m *DeleteResponse) String() string { return proto.CompactTextString(m) }
 func (*DeleteResponse) ProtoMessage()    {}
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6ff5ab49d8a5fcc4, []int{5}
+	return fileDescriptor_6ff5ab49d8a5fcc4, []int{3}
 }
 
 func (m *DeleteResponse) XXX_Unmarshal(b []byte) error {
@@ -314,69 +260,183 @@ func (m *DeleteResponse) GetRemoved() bool {
 	return false
 }
 
-type Filter struct {
-	Create               bool     `protobuf:"varint,1,opt,name=create,proto3" json:"create,omitempty"`
-	Update               bool     `protobuf:"varint,2,opt,name=update,proto3" json:"update,omitempty"`
-	Delete               bool     `protobuf:"varint,3,opt,name=delete,proto3" json:"delete,omitempty"`
+type WatchCancelRequest struct {
+	// watch_id is the watcher id to cancel so that no more events are transmitted.
+	WatchId              int64    `protobuf:"varint,1,opt,name=watch_id,json=watchId,proto3" json:"watch_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Filter) Reset()         { *m = Filter{} }
-func (m *Filter) String() string { return proto.CompactTextString(m) }
-func (*Filter) ProtoMessage()    {}
-func (*Filter) Descriptor() ([]byte, []int) {
+func (m *WatchCancelRequest) Reset()         { *m = WatchCancelRequest{} }
+func (m *WatchCancelRequest) String() string { return proto.CompactTextString(m) }
+func (*WatchCancelRequest) ProtoMessage()    {}
+func (*WatchCancelRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6ff5ab49d8a5fcc4, []int{4}
+}
+
+func (m *WatchCancelRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WatchCancelRequest.Unmarshal(m, b)
+}
+func (m *WatchCancelRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WatchCancelRequest.Marshal(b, m, deterministic)
+}
+func (m *WatchCancelRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WatchCancelRequest.Merge(m, src)
+}
+func (m *WatchCancelRequest) XXX_Size() int {
+	return xxx_messageInfo_WatchCancelRequest.Size(m)
+}
+func (m *WatchCancelRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_WatchCancelRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WatchCancelRequest proto.InternalMessageInfo
+
+func (m *WatchCancelRequest) GetWatchId() int64 {
+	if m != nil {
+		return m.WatchId
+	}
+	return 0
+}
+
+type WatchRequest struct {
+	// request_union is a request to either create a new watcher or cancel an existing watcher.
+	//
+	// Types that are valid to be assigned to RequestUnion:
+	//	*WatchRequest_CreateRequest
+	//	*WatchRequest_CancelRequest
+	RequestUnion         isWatchRequest_RequestUnion `protobuf_oneof:"request_union"`
+	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
+	XXX_unrecognized     []byte                      `json:"-"`
+	XXX_sizecache        int32                       `json:"-"`
+}
+
+func (m *WatchRequest) Reset()         { *m = WatchRequest{} }
+func (m *WatchRequest) String() string { return proto.CompactTextString(m) }
+func (*WatchRequest) ProtoMessage()    {}
+func (*WatchRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6ff5ab49d8a5fcc4, []int{5}
+}
+
+func (m *WatchRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WatchRequest.Unmarshal(m, b)
+}
+func (m *WatchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WatchRequest.Marshal(b, m, deterministic)
+}
+func (m *WatchRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WatchRequest.Merge(m, src)
+}
+func (m *WatchRequest) XXX_Size() int {
+	return xxx_messageInfo_WatchRequest.Size(m)
+}
+func (m *WatchRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_WatchRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WatchRequest proto.InternalMessageInfo
+
+type isWatchRequest_RequestUnion interface {
+	isWatchRequest_RequestUnion()
+}
+
+type WatchRequest_CreateRequest struct {
+	CreateRequest *WatchCreateRequest `protobuf:"bytes,1,opt,name=create_request,json=createRequest,proto3,oneof"`
+}
+
+type WatchRequest_CancelRequest struct {
+	CancelRequest *WatchCancelRequest `protobuf:"bytes,2,opt,name=cancel_request,json=cancelRequest,proto3,oneof"`
+}
+
+func (*WatchRequest_CreateRequest) isWatchRequest_RequestUnion() {}
+
+func (*WatchRequest_CancelRequest) isWatchRequest_RequestUnion() {}
+
+func (m *WatchRequest) GetRequestUnion() isWatchRequest_RequestUnion {
+	if m != nil {
+		return m.RequestUnion
+	}
+	return nil
+}
+
+func (m *WatchRequest) GetCreateRequest() *WatchCreateRequest {
+	if x, ok := m.GetRequestUnion().(*WatchRequest_CreateRequest); ok {
+		return x.CreateRequest
+	}
+	return nil
+}
+
+func (m *WatchRequest) GetCancelRequest() *WatchCancelRequest {
+	if x, ok := m.GetRequestUnion().(*WatchRequest_CancelRequest); ok {
+		return x.CancelRequest
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*WatchRequest) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*WatchRequest_CreateRequest)(nil),
+		(*WatchRequest_CancelRequest)(nil),
+	}
+}
+
+type WatchCreateRequest struct {
+	RType                ResourceType `protobuf:"varint,1,opt,name=r_type,json=rType,proto3,enum=pb.ResourceType" json:"r_type,omitempty"`
+	EType                []EventType  `protobuf:"varint,2,rep,packed,name=e_type,json=eType,proto3,enum=pb.EventType" json:"e_type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
+}
+
+func (m *WatchCreateRequest) Reset()         { *m = WatchCreateRequest{} }
+func (m *WatchCreateRequest) String() string { return proto.CompactTextString(m) }
+func (*WatchCreateRequest) ProtoMessage()    {}
+func (*WatchCreateRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6ff5ab49d8a5fcc4, []int{6}
 }
 
-func (m *Filter) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Filter.Unmarshal(m, b)
+func (m *WatchCreateRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WatchCreateRequest.Unmarshal(m, b)
 }
-func (m *Filter) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Filter.Marshal(b, m, deterministic)
+func (m *WatchCreateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WatchCreateRequest.Marshal(b, m, deterministic)
 }
-func (m *Filter) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Filter.Merge(m, src)
+func (m *WatchCreateRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WatchCreateRequest.Merge(m, src)
 }
-func (m *Filter) XXX_Size() int {
-	return xxx_messageInfo_Filter.Size(m)
+func (m *WatchCreateRequest) XXX_Size() int {
+	return xxx_messageInfo_WatchCreateRequest.Size(m)
 }
-func (m *Filter) XXX_DiscardUnknown() {
-	xxx_messageInfo_Filter.DiscardUnknown(m)
+func (m *WatchCreateRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_WatchCreateRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Filter proto.InternalMessageInfo
+var xxx_messageInfo_WatchCreateRequest proto.InternalMessageInfo
 
-func (m *Filter) GetCreate() bool {
+func (m *WatchCreateRequest) GetRType() ResourceType {
 	if m != nil {
-		return m.Create
+		return m.RType
 	}
-	return false
+	return ResourceType_A
 }
 
-func (m *Filter) GetUpdate() bool {
+func (m *WatchCreateRequest) GetEType() []EventType {
 	if m != nil {
-		return m.Update
+		return m.EType
 	}
-	return false
-}
-
-func (m *Filter) GetDelete() bool {
-	if m != nil {
-		return m.Delete
-	}
-	return false
+	return nil
 }
 
 type Event struct {
-	Type                 Event_EventType `protobuf:"varint,1,opt,name=type,proto3,enum=pb.Event_EventType" json:"type,omitempty"`
-	Key                  string          `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
-	Value                string          `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
-	OldValue             string          `protobuf:"bytes,4,opt,name=old_value,json=oldValue,proto3" json:"old_value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
-	XXX_unrecognized     []byte          `json:"-"`
-	XXX_sizecache        int32           `json:"-"`
+	EType                EventType    `protobuf:"varint,1,opt,name=e_type,json=eType,proto3,enum=pb.EventType" json:"e_type,omitempty"`
+	RType                ResourceType `protobuf:"varint,2,opt,name=r_type,json=rType,proto3,enum=pb.ResourceType" json:"r_type,omitempty"`
+	Value                string       `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
+	OldValue             string       `protobuf:"bytes,4,opt,name=old_value,json=oldValue,proto3" json:"old_value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
 func (m *Event) Reset()         { *m = Event{} }
@@ -404,18 +464,18 @@ func (m *Event) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Event proto.InternalMessageInfo
 
-func (m *Event) GetType() Event_EventType {
+func (m *Event) GetEType() EventType {
 	if m != nil {
-		return m.Type
+		return m.EType
 	}
-	return Event_Creat
+	return EventType_Creat
 }
 
-func (m *Event) GetKey() string {
+func (m *Event) GetRType() ResourceType {
 	if m != nil {
-		return m.Key
+		return m.RType
 	}
-	return ""
+	return ResourceType_A
 }
 
 func (m *Event) GetValue() string {
@@ -432,17 +492,73 @@ func (m *Event) GetOldValue() string {
 	return ""
 }
 
+type WatchResponse struct {
+	Created              bool     `protobuf:"varint,1,opt,name=created,proto3" json:"created,omitempty"`
+	WatchId              int64    `protobuf:"varint,2,opt,name=watch_id,json=watchId,proto3" json:"watch_id,omitempty"`
+	Event                *Event   `protobuf:"bytes,3,opt,name=event,proto3" json:"event,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *WatchResponse) Reset()         { *m = WatchResponse{} }
+func (m *WatchResponse) String() string { return proto.CompactTextString(m) }
+func (*WatchResponse) ProtoMessage()    {}
+func (*WatchResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6ff5ab49d8a5fcc4, []int{8}
+}
+
+func (m *WatchResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WatchResponse.Unmarshal(m, b)
+}
+func (m *WatchResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WatchResponse.Marshal(b, m, deterministic)
+}
+func (m *WatchResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WatchResponse.Merge(m, src)
+}
+func (m *WatchResponse) XXX_Size() int {
+	return xxx_messageInfo_WatchResponse.Size(m)
+}
+func (m *WatchResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_WatchResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WatchResponse proto.InternalMessageInfo
+
+func (m *WatchResponse) GetCreated() bool {
+	if m != nil {
+		return m.Created
+	}
+	return false
+}
+
+func (m *WatchResponse) GetWatchId() int64 {
+	if m != nil {
+		return m.WatchId
+	}
+	return 0
+}
+
+func (m *WatchResponse) GetEvent() *Event {
+	if m != nil {
+		return m.Event
+	}
+	return nil
+}
+
 func init() {
-	proto.RegisterEnum("pb.BenchmarkRequest_Command", BenchmarkRequest_Command_name, BenchmarkRequest_Command_value)
-	proto.RegisterEnum("pb.Event_EventType", Event_EventType_name, Event_EventType_value)
-	proto.RegisterType((*BenchmarkRequest)(nil), "pb.BenchmarkRequest")
-	proto.RegisterType((*BenchmarkResponse)(nil), "pb.BenchmarkResponse")
+	proto.RegisterEnum("pb.EventType", EventType_name, EventType_value)
+	proto.RegisterEnum("pb.ResourceType", ResourceType_name, ResourceType_value)
 	proto.RegisterType((*PutRequest)(nil), "pb.PutRequest")
 	proto.RegisterType((*PutResponse)(nil), "pb.PutResponse")
 	proto.RegisterType((*DeleteRequest)(nil), "pb.DeleteRequest")
 	proto.RegisterType((*DeleteResponse)(nil), "pb.DeleteResponse")
-	proto.RegisterType((*Filter)(nil), "pb.Filter")
+	proto.RegisterType((*WatchCancelRequest)(nil), "pb.WatchCancelRequest")
+	proto.RegisterType((*WatchRequest)(nil), "pb.WatchRequest")
+	proto.RegisterType((*WatchCreateRequest)(nil), "pb.WatchCreateRequest")
 	proto.RegisterType((*Event)(nil), "pb.Event")
+	proto.RegisterType((*WatchResponse)(nil), "pb.WatchResponse")
 }
 
 func init() {
@@ -450,34 +566,39 @@ func init() {
 }
 
 var fileDescriptor_6ff5ab49d8a5fcc4 = []byte{
-	// 430 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x53, 0xcb, 0x6e, 0xd4, 0x40,
-	0x10, 0x5c, 0x7b, 0x9f, 0x6e, 0xc4, 0x32, 0xe9, 0x04, 0xb4, 0x32, 0x1c, 0x60, 0x24, 0x44, 0xe0,
-	0x60, 0x20, 0x20, 0xae, 0x48, 0x04, 0xb8, 0xe4, 0xb2, 0x32, 0x10, 0x8e, 0xc8, 0x8f, 0x96, 0x12,
-	0xc5, 0xf6, 0x0c, 0xf6, 0xd8, 0x92, 0x3f, 0x88, 0xcf, 0xe1, 0x9f, 0xd0, 0x3c, 0xec, 0x98, 0x15,
-	0x5c, 0x56, 0xd3, 0xd5, 0x35, 0xd5, 0xb5, 0xd5, 0x63, 0x60, 0x32, 0x7d, 0xd9, 0x50, 0xdd, 0x5d,
-	0x67, 0x14, 0xc9, 0x5a, 0x28, 0x81, 0xbe, 0x4c, 0x79, 0x0b, 0xec, 0x03, 0x55, 0xd9, 0x55, 0x99,
-	0xd4, 0x37, 0x31, 0xfd, 0x6c, 0xa9, 0x51, 0xf8, 0x0e, 0xd6, 0x99, 0x28, 0xcb, 0xa4, 0xca, 0x77,
-	0xde, 0x63, 0xef, 0x74, 0x7b, 0xf6, 0x28, 0x92, 0x69, 0x74, 0x48, 0x8b, 0xce, 0x2d, 0x27, 0x1e,
-	0xc8, 0xfc, 0x39, 0xac, 0x1d, 0x86, 0x01, 0x2c, 0x1b, 0x95, 0xd4, 0x8a, 0xcd, 0x70, 0x03, 0x8b,
-	0x46, 0x09, 0xc9, 0x3c, 0x07, 0xaa, 0x86, 0xf9, 0xfc, 0x18, 0x8e, 0x26, 0x7a, 0x8d, 0x14, 0x55,
-	0x43, 0xfc, 0x2d, 0xc0, 0xbe, 0x55, 0x83, 0x0b, 0x06, 0xf3, 0x0b, 0xea, 0x8d, 0x83, 0x20, 0xd6,
-	0x47, 0x3c, 0x81, 0x65, 0x97, 0x14, 0x2d, 0xed, 0x7c, 0x83, 0xd9, 0x82, 0x3f, 0x85, 0x3b, 0xe6,
-	0x96, 0x15, 0xc1, 0x07, 0xb0, 0x6a, 0x65, 0x9e, 0x28, 0x32, 0x37, 0x37, 0xb1, 0xab, 0xf8, 0x13,
-	0xb8, 0xfb, 0x91, 0x0a, 0x52, 0xf4, 0x5f, 0x7d, 0xfe, 0x02, 0xb6, 0x03, 0xc5, 0x89, 0xed, 0x60,
-	0x5d, 0x53, 0x29, 0x3a, 0xca, 0x9d, 0xda, 0x50, 0xf2, 0x3d, 0xac, 0x3e, 0x5f, 0x17, 0x8a, 0x6a,
-	0x3d, 0x30, 0xab, 0x69, 0x32, 0xd0, 0x56, 0x13, 0x23, 0xfe, 0xd4, 0x88, 0xc6, 0x73, 0x33, 0x65,
-	0x37, 0xb7, 0xb8, 0xad, 0xf8, 0x2f, 0x0f, 0x96, 0x9f, 0x3a, 0xaa, 0x14, 0x3e, 0x83, 0x85, 0xea,
-	0x25, 0xb9, 0xf0, 0x8f, 0x75, 0xf8, 0xa6, 0x61, 0x7f, 0xbf, 0xf6, 0x92, 0x62, 0x43, 0xd0, 0x7f,
-	0xe1, 0x86, 0x7a, 0x17, 0x87, 0x3e, 0xde, 0x46, 0x34, 0x9f, 0x44, 0x84, 0x0f, 0x21, 0x10, 0x45,
-	0xfe, 0xc3, 0x76, 0x16, 0xa6, 0xb3, 0x11, 0x45, 0x7e, 0x69, 0xf2, 0x8b, 0x20, 0x18, 0x75, 0xf5,
-	0x8a, 0xce, 0xb5, 0x7d, 0x36, 0x43, 0x80, 0xd5, 0x37, 0xe3, 0x98, 0x79, 0xfa, 0x6c, 0x93, 0x61,
-	0xfe, 0xd9, 0x6f, 0x0f, 0x82, 0x8b, 0xcb, 0x2f, 0xf6, 0x25, 0xe1, 0x29, 0xcc, 0xf7, 0xad, 0xc2,
-	0xad, 0x36, 0x79, 0xbb, 0xbc, 0xf0, 0xde, 0x58, 0xbb, 0xdd, 0xce, 0xf0, 0xf5, 0xa0, 0x81, 0x47,
-	0xba, 0xf9, 0xd7, 0x32, 0x42, 0x9c, 0x42, 0xe3, 0x15, 0x0e, 0xcb, 0xef, 0x89, 0xca, 0xae, 0x10,
-	0x74, 0xdb, 0xe6, 0x1d, 0x06, 0x63, 0x1e, 0x7c, 0xf6, 0xca, 0xc3, 0xf7, 0xb0, 0x35, 0x9c, 0xf1,
-	0x39, 0xe1, 0xc9, 0xbf, 0x5e, 0x6b, 0x78, 0xff, 0x00, 0x1d, 0x86, 0xa4, 0x2b, 0xf3, 0x31, 0xbc,
-	0xf9, 0x13, 0x00, 0x00, 0xff, 0xff, 0xd2, 0xee, 0x73, 0xf6, 0x20, 0x03, 0x00, 0x00,
+	// 503 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0xcd, 0x6e, 0xd4, 0x30,
+	0x10, 0x5e, 0x27, 0x24, 0x6d, 0x66, 0x9b, 0xd4, 0xb5, 0x50, 0xb5, 0x94, 0x03, 0x2b, 0xf3, 0x17,
+	0xed, 0x61, 0x0b, 0xe1, 0xc8, 0x01, 0xd1, 0x82, 0x44, 0xd5, 0x4b, 0x15, 0xa0, 0x5c, 0x90, 0xa2,
+	0x6c, 0x32, 0x52, 0x57, 0x0a, 0x49, 0x48, 0x9c, 0x45, 0xfb, 0x08, 0x3c, 0x06, 0x6f, 0x8a, 0x6c,
+	0xc7, 0x69, 0x16, 0x55, 0x70, 0xe0, 0x14, 0xcf, 0x37, 0x33, 0xdf, 0xe7, 0xf9, 0x71, 0x80, 0xd6,
+	0xab, 0xd3, 0x16, 0x9b, 0xcd, 0x3a, 0xc3, 0x65, 0xdd, 0x54, 0xa2, 0x62, 0x56, 0xbd, 0xe2, 0x5f,
+	0x01, 0xae, 0x3a, 0x11, 0xe3, 0xf7, 0x0e, 0x5b, 0xc1, 0x9e, 0x81, 0xd3, 0x88, 0x6d, 0x8d, 0x33,
+	0x32, 0x27, 0x61, 0x10, 0xd1, 0x65, 0xbd, 0x5a, 0xc6, 0xd8, 0x56, 0x5d, 0x93, 0xe1, 0xa7, 0x6d,
+	0x8d, 0xb1, 0x76, 0x33, 0x0a, 0xf6, 0x25, 0x6e, 0x67, 0xd6, 0x9c, 0x84, 0x5e, 0x2c, 0x8f, 0xec,
+	0x3e, 0x38, 0x9b, 0xb4, 0xe8, 0x70, 0x66, 0x2b, 0x4c, 0x1b, 0xfc, 0x29, 0x4c, 0x15, 0x7b, 0x5b,
+	0x57, 0x65, 0x8b, 0xec, 0x18, 0xdc, 0xae, 0xce, 0x53, 0xa1, 0xf9, 0xf7, 0xe3, 0xde, 0xe2, 0x17,
+	0xe0, 0xbf, 0xc3, 0x02, 0x05, 0xfe, 0xf7, 0x3d, 0xf8, 0x02, 0x02, 0x43, 0xd5, 0x8b, 0xce, 0x60,
+	0xaf, 0xc1, 0x6f, 0xd5, 0x06, 0xf3, 0x5e, 0xd5, 0x98, 0xfc, 0x14, 0xd8, 0x97, 0x54, 0x64, 0x37,
+	0xe7, 0x69, 0x99, 0x61, 0x61, 0xb4, 0x1f, 0xc0, 0xfe, 0x0f, 0x89, 0x26, 0x6b, 0x9d, 0x60, 0xc7,
+	0x7b, 0xca, 0xbe, 0xc8, 0xf9, 0x2f, 0x02, 0x07, 0x2a, 0xc3, 0xc4, 0xbe, 0x81, 0x20, 0x6b, 0x30,
+	0x15, 0x98, 0x34, 0x1a, 0x51, 0x19, 0xd3, 0xe8, 0x58, 0x5e, 0x58, 0x73, 0x2b, 0x77, 0x1f, 0xff,
+	0x61, 0x12, 0xfb, 0xd9, 0x18, 0x50, 0x04, 0x4a, 0x7d, 0x20, 0xb0, 0xfe, 0x24, 0x18, 0x5f, 0x4e,
+	0x11, 0x8c, 0x81, 0xb3, 0x43, 0xf0, 0xfb, 0xcc, 0xa4, 0x2b, 0xd7, 0x55, 0xc9, 0x33, 0x53, 0xd4,
+	0x8e, 0xce, 0x73, 0x70, 0x9b, 0xe4, 0x1f, 0x1d, 0x95, 0x1f, 0xf6, 0x04, 0x5c, 0xd4, 0x81, 0xd6,
+	0xdc, 0x0e, 0x83, 0xc8, 0x97, 0x81, 0xef, 0x37, 0x58, 0x0a, 0x1d, 0xa5, 0x82, 0xf9, 0x4f, 0x02,
+	0x8e, 0x02, 0x47, 0xf1, 0x9a, 0xf8, 0xce, 0xf8, 0x91, 0xbc, 0xf5, 0x77, 0xf9, 0x3b, 0xd7, 0x88,
+	0x3d, 0x04, 0xaf, 0x2a, 0xf2, 0x44, 0x7b, 0xee, 0x29, 0xcf, 0x7e, 0x55, 0xe4, 0xd7, 0x6a, 0xc7,
+	0x10, 0xfc, 0x7e, 0x26, 0xb7, 0x03, 0xd7, 0x4d, 0x1e, 0x06, 0xde, 0x9b, 0x3b, 0xa3, 0xb5, 0x76,
+	0x46, 0xcb, 0x1e, 0x81, 0x83, 0xf2, 0xd6, 0x4a, 0x78, 0x1a, 0x79, 0x43, 0x19, 0xb1, 0xc6, 0x17,
+	0x4b, 0xf0, 0x86, 0xb2, 0x98, 0x07, 0x8e, 0xea, 0x2f, 0x9d, 0x30, 0x00, 0xf7, 0xb3, 0xda, 0x62,
+	0x4a, 0xe4, 0x59, 0x2f, 0x1f, 0xb5, 0x16, 0x8f, 0xe1, 0x60, 0x5c, 0x20, 0x73, 0x80, 0xbc, 0xa5,
+	0x13, 0xf9, 0x39, 0xa3, 0x44, 0x7e, 0xce, 0xa9, 0x15, 0xdd, 0x80, 0x77, 0x79, 0xfd, 0x51, 0x3f,
+	0x4a, 0x16, 0x82, 0x7d, 0xd5, 0x09, 0x16, 0x48, 0xe9, 0xdb, 0x37, 0x79, 0x72, 0x38, 0xd8, 0xba,
+	0x3e, 0x3e, 0x61, 0x2f, 0x8d, 0x0e, 0x3b, 0x92, 0xce, 0x9d, 0xb7, 0x73, 0xc2, 0xc6, 0x90, 0x49,
+	0x89, 0x5e, 0x83, 0xa3, 0xba, 0xc4, 0x22, 0x73, 0xa0, 0xc3, 0x8a, 0x99, 0xcc, 0xa3, 0x11, 0x62,
+	0x12, 0x43, 0xf2, 0x82, 0xac, 0x5c, 0xf5, 0xbf, 0x78, 0xf5, 0x3b, 0x00, 0x00, 0xff, 0xff, 0xe2,
+	0x8a, 0xc4, 0xa6, 0x43, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -494,9 +615,6 @@ const _ = grpc.SupportPackageIsVersion6
 type KVServiceClient interface {
 	Put(ctx context.Context, in *PutRequest, opts ...grpc.CallOption) (*PutResponse, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
-	Watch(ctx context.Context, in *Filter, opts ...grpc.CallOption) (KVService_WatchClient, error)
-	// for testing
-	WatchBenchmark(ctx context.Context, in *BenchmarkRequest, opts ...grpc.CallOption) (*BenchmarkResponse, error)
 }
 
 type kVServiceClient struct {
@@ -525,54 +643,10 @@ func (c *kVServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ..
 	return out, nil
 }
 
-func (c *kVServiceClient) Watch(ctx context.Context, in *Filter, opts ...grpc.CallOption) (KVService_WatchClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_KVService_serviceDesc.Streams[0], "/pb.KVService/Watch", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &kVServiceWatchClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type KVService_WatchClient interface {
-	Recv() (*Event, error)
-	grpc.ClientStream
-}
-
-type kVServiceWatchClient struct {
-	grpc.ClientStream
-}
-
-func (x *kVServiceWatchClient) Recv() (*Event, error) {
-	m := new(Event)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *kVServiceClient) WatchBenchmark(ctx context.Context, in *BenchmarkRequest, opts ...grpc.CallOption) (*BenchmarkResponse, error) {
-	out := new(BenchmarkResponse)
-	err := c.cc.Invoke(ctx, "/pb.KVService/WatchBenchmark", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // KVServiceServer is the server API for KVService service.
 type KVServiceServer interface {
 	Put(context.Context, *PutRequest) (*PutResponse, error)
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
-	Watch(*Filter, KVService_WatchServer) error
-	// for testing
-	WatchBenchmark(context.Context, *BenchmarkRequest) (*BenchmarkResponse, error)
 }
 
 // UnimplementedKVServiceServer can be embedded to have forward compatible implementations.
@@ -584,12 +658,6 @@ func (*UnimplementedKVServiceServer) Put(ctx context.Context, req *PutRequest) (
 }
 func (*UnimplementedKVServiceServer) Delete(ctx context.Context, req *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
-}
-func (*UnimplementedKVServiceServer) Watch(req *Filter, srv KVService_WatchServer) error {
-	return status.Errorf(codes.Unimplemented, "method Watch not implemented")
-}
-func (*UnimplementedKVServiceServer) WatchBenchmark(ctx context.Context, req *BenchmarkRequest) (*BenchmarkResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WatchBenchmark not implemented")
 }
 
 func RegisterKVServiceServer(s *grpc.Server, srv KVServiceServer) {
@@ -632,45 +700,6 @@ func _KVService_Delete_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _KVService_Watch_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(Filter)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(KVServiceServer).Watch(m, &kVServiceWatchServer{stream})
-}
-
-type KVService_WatchServer interface {
-	Send(*Event) error
-	grpc.ServerStream
-}
-
-type kVServiceWatchServer struct {
-	grpc.ServerStream
-}
-
-func (x *kVServiceWatchServer) Send(m *Event) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _KVService_WatchBenchmark_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BenchmarkRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(KVServiceServer).WatchBenchmark(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pb.KVService/WatchBenchmark",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KVServiceServer).WatchBenchmark(ctx, req.(*BenchmarkRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _KVService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.KVService",
 	HandlerType: (*KVServiceServer)(nil),
@@ -683,16 +712,110 @@ var _KVService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "Delete",
 			Handler:    _KVService_Delete_Handler,
 		},
-		{
-			MethodName: "WatchBenchmark",
-			Handler:    _KVService_WatchBenchmark_Handler,
-		},
 	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "pb/service.proto",
+}
+
+// WatchClient is the client API for Watch service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type WatchClient interface {
+	Watch(ctx context.Context, opts ...grpc.CallOption) (Watch_WatchClient, error)
+}
+
+type watchClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewWatchClient(cc grpc.ClientConnInterface) WatchClient {
+	return &watchClient{cc}
+}
+
+func (c *watchClient) Watch(ctx context.Context, opts ...grpc.CallOption) (Watch_WatchClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Watch_serviceDesc.Streams[0], "/pb.Watch/Watch", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &watchWatchClient{stream}
+	return x, nil
+}
+
+type Watch_WatchClient interface {
+	Send(*WatchRequest) error
+	Recv() (*WatchResponse, error)
+	grpc.ClientStream
+}
+
+type watchWatchClient struct {
+	grpc.ClientStream
+}
+
+func (x *watchWatchClient) Send(m *WatchRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *watchWatchClient) Recv() (*WatchResponse, error) {
+	m := new(WatchResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// WatchServer is the server API for Watch service.
+type WatchServer interface {
+	Watch(Watch_WatchServer) error
+}
+
+// UnimplementedWatchServer can be embedded to have forward compatible implementations.
+type UnimplementedWatchServer struct {
+}
+
+func (*UnimplementedWatchServer) Watch(srv Watch_WatchServer) error {
+	return status.Errorf(codes.Unimplemented, "method Watch not implemented")
+}
+
+func RegisterWatchServer(s *grpc.Server, srv WatchServer) {
+	s.RegisterService(&_Watch_serviceDesc, srv)
+}
+
+func _Watch_Watch_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(WatchServer).Watch(&watchWatchServer{stream})
+}
+
+type Watch_WatchServer interface {
+	Send(*WatchResponse) error
+	Recv() (*WatchRequest, error)
+	grpc.ServerStream
+}
+
+type watchWatchServer struct {
+	grpc.ServerStream
+}
+
+func (x *watchWatchServer) Send(m *WatchResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *watchWatchServer) Recv() (*WatchRequest, error) {
+	m := new(WatchRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+var _Watch_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.Watch",
+	HandlerType: (*WatchServer)(nil),
+	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Watch",
-			Handler:       _KVService_Watch_Handler,
+			Handler:       _Watch_Watch_Handler,
 			ServerStreams: true,
+			ClientStreams: true,
 		},
 	},
 	Metadata: "pb/service.proto",
